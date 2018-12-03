@@ -54,13 +54,13 @@ namespace Tests
         {
             using (var Context = new TradingContext())
             {
-                var items =  Context.Flasks.Where(w => !w.IconUrl.Contains("relic=1"));
+                var items =  Context.Currencies.Where(w => !w.IconUrl.Contains("relic=1"));
 
                 string allIds = "";
 
-                foreach (Item item in items)
+                foreach (Currency item in items)
                 {
-                    allIds += $"public static int {item.Name.Replace(" ","_").Replace("'","").Replace("-","_").Replace("/","_")} = {item.InGameId};\n";
+                    allIds += $"public static int {item.Name.Replace(" ","_").Replace("'","").Replace("-","_").Replace("/","_")} = {item.PoeNinjaId};\n";
 
                 }
 
