@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PoeTradingHelper.Backend.Models;
+using PoeTradingHelper.Backend.Models.ItemMapping;
 
 namespace PoeTradingHelper.Backend.DAL
 {
@@ -19,15 +20,18 @@ namespace PoeTradingHelper.Backend.DAL
         public DbSet<PoeObject> PoeObjects { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
-        public DbSet<ItemCombinationResult> CombinationResults { get; set; }
+        public DbSet<ItemCombination> ItemCombinations { get; set; }
         public DbSet<ItemWithAmount> ItemWithAmounts { get; set; }
+        public DbSet<ItemCombinationWithFixedResult> ItemCombinationsWithFixedResults { get; set; }
+        public DbSet<Gem> Gems { get; set; }
+        public DbSet<UniqueMap> UniqueMaps { get; set; }
 
-        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(Connection);
           
+            
             
         }
     }

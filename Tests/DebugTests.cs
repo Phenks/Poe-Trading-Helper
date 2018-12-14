@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using PoeTradingHelper.Backend.DAL;
+using PoeTradingHelper.Backend.DAL.Initializer;
 using PoeTradingHelper.Backend.Helper;
 using PoeTradingHelper.Backend.Models;
 
@@ -20,28 +21,25 @@ namespace Tests
                 Context.Database.EnsureDeleted();
                 Context.Database.EnsureCreated();
             }
-            UpdateAllData();
-            InitalizeCombinationResults();
-        }
-
-        [Test]
-        public void CreateDataBase()
-        {
+            DataUpdater updater = new DataUpdater();
+            updater.UpdateAllData();
             using (var Context = new TradingContext())
             {
-                Context.Database.EnsureCreated();
+                new CombinationResultsInitalizer().Initalize(Context);
             }
-        }
 
-        [Test]
-        public void UpdateAllData()
+
+        }
+        
+
+        private void UpdateAllData()
         {
             DataUpdater updater = new DataUpdater();
             updater.UpdateAllData();
         }
 
         [Test]
-        public void  InitalizeCombinationResults()
+        public void  RecreateCombinationResults()
         {
             using (var Context = new TradingContext())
             {
@@ -54,13 +52,13 @@ namespace Tests
         {
             using (var Context = new TradingContext())
             {
-                var items =  Context.Currencies.Where(w => !w.IconUrl.Contains("relic=1"));
+                var items =  Context.UniqueMaps.Where(w => !w.IconUrl.Contains("relic=1"));
 
                 string allIds = "";
 
-                foreach (Currency item in items)
+                foreach (UniqueMap item in items)
                 {
-                    allIds += $"public static int {item.Name.Replace(" ","_").Replace("'","").Replace("-","_").Replace("/","_")} = {item.PoeNinjaId};\n";
+                    allIds += $"public static int {item.Name.Replace(" ","_").Replace("'","").Replace("-","_").Replace("/","_")} = {item.InGameId};\n";
 
                 }
 
@@ -75,7 +73,7 @@ namespace Tests
             using (var Context = new TradingContext())
             {
                 
-                var combination = Context.CombinationResults.
+                var combination = Context.ItemCombinationsWithFixedResults.
                     Include(c => c.Ingredients).
                         ThenInclude(i => i.Item).
                     Include(c => c.Result)

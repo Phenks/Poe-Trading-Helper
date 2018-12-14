@@ -1,0 +1,65 @@
+<h1>Divination Card Turn Ins</h1>
+
+<p *ngIf="!combinationsWithFixedResults"><em>Loading...</em></p>
+
+
+
+
+<mat-table class=" table divinationCardTable table-striped" #table [dataSource]="divinationCardsDataSource" matSort>
+
+  <!--- Note that these columns can be defined in any order.
+  The actual rendered columns are set as a property on the row definition" -->
+  <!-- Name Column -->
+  <ng-container matColumnDef="cardName">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+    <mat-cell *matCellDef="let combinationResult" >
+      <span id="{{combinationResult.id}}" (mouseenter)="showPopup($event);">
+        <img class="itemIcon" src="{{combinationResult.ingredients[0].item.icon}}"/>
+        {{combinationResult.ingredients[0].item.name}}
+      </span>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="outcome">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Outcome </mat-header-cell>
+    <mat-cell *matCellDef="let combinationResult">
+      <img class="itemIcon" src="{{combinationResult.result.item.icon}}" />
+      {{combinationResult.result.item.name}}
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="profitPerSet">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Per Set </mat-header-cell>
+    <mat-cell *matCellDef="let combinationResult">
+      <img class="itemIcon" src="{{constants.ChaosOrbUrl}}" />
+      {{combinationResult.profitInChaos | number : '1.0-1' }}
+      <div *ngIf="combinationResult.profitInExalted >= 1">
+        <br />
+        <img class="itemIcon" src="{{constants.ExaltedOrbUrl}}" />
+        {{combinationResult.profitInExalted | number : '1.0-2' }}
+      </div>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="profitPerTrade">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Per Trade </mat-header-cell>
+    <mat-cell *matCellDef="let combinationResult">
+      <img class="itemIcon" src="{{constants.ChaosOrbUrl}}" />
+      {{(combinationResult.profitPerTradeInChaos)| number : '1.0-1' }}
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="cardPrice">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Card Price </mat-header-cell>
+    <mat-cell *matCellDef="let combinationResult">
+      <img class="itemIcon" src="{{constants.ChaosOrbUrl}}" />
+      {{combinationResult.ingredients[0].item.chaosValue != 0 ? combinationResult.ingredients[0].item.chaosValue : "unknown"}}
+      <div *ngIf="combinationResult.ingredients[0].item.exaltedValue >= 1">
+        <br />
+        <img class="itemIcon" src="{{constants.ExaltedOrbUrl}}" />
+        {{combinationResult.ingredients[0].item.exaltedValue | number : '1.0-1' }}
+      </div>
+    </mat-cell>
+  </ng-container>
+
+
+
+  <mat-header-row  *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+  <mat-row  *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+</mat-table>

@@ -8,7 +8,7 @@ namespace PoeTradingHelper.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Currencies",
+                name: "CurrencyId",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -52,13 +52,13 @@ namespace PoeTradingHelper.Migrations
                     table.ForeignKey(
                         name: "FK_CurrencyRatios_Currencies_GetId",
                         column: x => x.GetId,
-                        principalTable: "Currencies",
+                        principalTable: "CurrencyId",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CurrencyRatios_Currencies_PayId",
                         column: x => x.PayId,
-                        principalTable: "Currencies",
+                        principalTable: "CurrencyId",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -111,7 +111,7 @@ namespace PoeTradingHelper.Migrations
                 name: "DivinationCards");
 
             migrationBuilder.DropTable(
-                name: "Currencies");
+                name: "CurrencyId");
 
             migrationBuilder.DropTable(
                 name: "Price");

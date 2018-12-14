@@ -17,11 +17,11 @@ namespace PoeTradingHelper.Migrations
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_Currencies",
-                table: "Currencies");
+                table: "CurrencyId");
 
             migrationBuilder.DropColumn(
                 name: "Id",
-                table: "Currencies");
+                table: "CurrencyId");
 
             migrationBuilder.RenameColumn(
                 name: "PoeNinjaId",
@@ -50,26 +50,26 @@ namespace PoeTradingHelper.Migrations
 
             migrationBuilder.AlterColumn<int>(
                 name: "PoeNinjaId",
-                table: "Currencies",
+                table: "CurrencyId",
                 nullable: false,
                 oldClrType: typeof(int))
                 .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             migrationBuilder.AddColumn<string>(
                 name: "IconUrl",
-                table: "Currencies",
+                table: "CurrencyId",
                 nullable: true);
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Currencies",
-                table: "Currencies",
+                table: "CurrencyId",
                 column: "PoeNinjaId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_CurrencyRatios_Currencies_GetInGameId",
                 table: "CurrencyRatios",
                 column: "GetInGameId",
-                principalTable: "Currencies",
+                principalTable: "CurrencyId",
                 principalColumn: "PoeNinjaId",
                 onDelete: ReferentialAction.Restrict);
 
@@ -77,7 +77,7 @@ namespace PoeTradingHelper.Migrations
                 name: "FK_CurrencyRatios_Currencies_PayInGameId",
                 table: "CurrencyRatios",
                 column: "PayInGameId",
-                principalTable: "Currencies",
+                principalTable: "CurrencyId",
                 principalColumn: "PoeNinjaId",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -94,11 +94,11 @@ namespace PoeTradingHelper.Migrations
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_Currencies",
-                table: "Currencies");
+                table: "CurrencyId");
 
             migrationBuilder.DropColumn(
                 name: "IconUrl",
-                table: "Currencies");
+                table: "CurrencyId");
 
             migrationBuilder.RenameColumn(
                 name: "InGameId",
@@ -127,28 +127,28 @@ namespace PoeTradingHelper.Migrations
 
             migrationBuilder.AlterColumn<int>(
                 name: "PoeNinjaId",
-                table: "Currencies",
+                table: "CurrencyId",
                 nullable: false,
                 oldClrType: typeof(int))
                 .OldAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             migrationBuilder.AddColumn<int>(
                 name: "Id",
-                table: "Currencies",
+                table: "CurrencyId",
                 nullable: false,
                 defaultValue: 0)
                 .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Currencies",
-                table: "Currencies",
+                table: "CurrencyId",
                 column: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_CurrencyRatios_Currencies_GetId",
                 table: "CurrencyRatios",
                 column: "GetId",
-                principalTable: "Currencies",
+                principalTable: "CurrencyId",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
@@ -156,7 +156,7 @@ namespace PoeTradingHelper.Migrations
                 name: "FK_CurrencyRatios_Currencies_PayId",
                 table: "CurrencyRatios",
                 column: "PayId",
-                principalTable: "Currencies",
+                principalTable: "CurrencyId",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }

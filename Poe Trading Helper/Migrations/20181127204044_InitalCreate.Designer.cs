@@ -33,7 +33,7 @@ namespace PoeTradingHelper.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Currencies");
+                    b.ToTable("CurrencyId");
                 });
 
             modelBuilder.Entity("PoeTradingHelper.Backend.Models.CurrencyRatio", b =>

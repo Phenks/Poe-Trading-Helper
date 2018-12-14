@@ -24,14 +24,20 @@ namespace PoeTradingHelper.Backend.Helper
         {
             const int ExaltedOrbId = 2;
 
-            var url = PoeNinjaApiUrlBuilder.BuildUrl(PoeNinjaApiUrlBuilder.Category.CurrencyRatios);
+            var currencyUrl = PoeNinjaApiUrlBuilder.BuildUrl(PoeNinjaApiUrlBuilder.Category.CurrencyRatios);
+            var fragmentsUrl = PoeNinjaApiUrlBuilder.BuildUrl(PoeNinjaApiUrlBuilder.Category.Fragment);
+
             PoeNinjaWrapper.Currency currencyWrapper =
-                WebRequestManager.GetWebRequestDataAsJson<PoeNinjaWrapper.Currency>(url);
+                WebRequestManager.GetWebRequestDataAsJson<PoeNinjaWrapper.Currency>(currencyUrl);
+
+            PoeNinjaWrapper.Currency fragmentsWrapper =
+                WebRequestManager.GetWebRequestDataAsJson<PoeNinjaWrapper.Currency>(fragmentsUrl);
 
             var Currencies = new List<Currency>();
 
             InitializeCurrenciesWithBaseData(currencyWrapper, Currencies);
             FillInPriceInChaos(currencyWrapper, Currencies);
+            FillInPriceInChaos(fragmentsWrapper,Currencies);
             CalculateExaltedRatio(ExaltedOrbId, Currencies);
 
             return Currencies;
@@ -82,6 +88,14 @@ namespace PoeTradingHelper.Backend.Helper
             return divinationCardsWrapper.Data;
         }
 
+        public List<Gem> GetGems()
+        {
+            var url = PoeNinjaApiUrlBuilder.BuildUrl(PoeNinjaApiUrlBuilder.Category.Gems);
+            var weaponsWrapper =
+                WebRequestManager.GetWebRequestDataAsJson<PoeNinjaWrapper.Gem>(url);
+            return weaponsWrapper.Data;
+        }
+
         public List<Weapon> GetWeapons()
         {
             var url = PoeNinjaApiUrlBuilder.BuildUrl(PoeNinjaApiUrlBuilder.Category.Weapons);
@@ -130,6 +144,13 @@ namespace PoeTradingHelper.Backend.Helper
         }
 
 
+        public List<UniqueMap> GetUniqueMaps()
+        {
+            var url = PoeNinjaApiUrlBuilder.BuildUrl(PoeNinjaApiUrlBuilder.Category.UnqiueMaps);
+            var uniqueMaps =
+                WebRequestManager.GetWebRequestDataAsJson<PoeNinjaWrapper.UniqueMaps>(url);
+            return uniqueMaps.Data;
+        }
     }
 
     public class PoeNinjaApiUrlBuilder
@@ -156,7 +177,7 @@ namespace PoeTradingHelper.Backend.Helper
 
         public sealed class League
         {
-            public static readonly League CurrentScLeague = new League("Delve");
+            public static readonly League CurrentScLeague = new League("Betrayal");
             public static readonly League TestLeague = new League("test");
             private readonly string league;
 
@@ -197,7 +218,7 @@ namespace PoeTradingHelper.Backend.Helper
             public static readonly Category Flask = new Category(ApiCalls.ItemOverview, "UniqueFlask");
             public static readonly Category Jewel = new Category(ApiCalls.ItemOverview ,"UniqueJewel");
             public static readonly Category Fragment = new Category(ApiCalls.CurrencyOverview ,"Fragment");
-            
+            public static readonly Category UnqiueMaps = new Category(ApiCalls.ItemOverview, "UniqueMap");
 
             private Category(string apiCall, string typeParameter)
             {
@@ -209,6 +230,7 @@ namespace PoeTradingHelper.Backend.Helper
 
             public string ApiCall { get; }
             public string TypeParameter { get; }
+            
         }
     }
 }

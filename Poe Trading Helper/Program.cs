@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PoeTradingHelper.Backend.DAL;
+using PoeTradingHelper.Backend.DAL.Initializer;
 using PoeTradingHelper.Backend.Helper;
 using PoeTradingHelper.Backend.Models;
 
@@ -19,14 +20,26 @@ namespace Poe_Trading_Helper
     {
         public static void Main(string[] args)
         {
-            
-
-            DataUpdater dataUpdater = new DataUpdater();
-            dataUpdater.UpdateAllData();    
-            
-
-
+            RecreateAllData();
             CreateWebHostBuilder(args).Build().Run();
+        }
+
+        public static void RecreateAllData()
+        {
+            using (var Context = new TradingContext())
+            {
+
+                Context.Database.EnsureDeleted();
+                Context.Database.EnsureCreated();
+            }
+            DataUpdater updater = new DataUpdater();
+            updater.UpdateAllData();
+            using (var Context = new TradingContext())
+            {
+                new CombinationResultsInitalizer().Initalize(Context);
+            }
+
+
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

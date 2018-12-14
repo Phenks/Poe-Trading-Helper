@@ -80,9 +80,17 @@ namespace PoeTradingHelper.Backend.Helper.JsonWrappers
             }
 
         }
-        
 
 
+        public class Gem
+        {
+            [JsonProperty("lines")] public List<Models.Gem> Data { get; set; }
+        }
+
+        public class UniqueMaps
+        {
+            [JsonProperty("lines")] public List<Models.UniqueMap> Data { get; set; }
+        }
     }
 
 

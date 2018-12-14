@@ -18,7 +18,7 @@ namespace PoeTradingHelper.Backend.Helper
 
         public void UpdateAllData()
         {
-          
+
             UpdateCurrencyTypes();
             UpdateDivinationCards();
             UpdateWeapons();
@@ -27,8 +27,40 @@ namespace PoeTradingHelper.Backend.Helper
             UpdateProphecies();
             UpdateCraftingBases();
             UpdateAccessories();
+            UpdateGems();
+            UpdateUniqueMaps();
+            UpdateItemCombinationCostAndProfits();
         }
 
+        private void UpdateUniqueMaps()
+        {
+            var uniqueMaps = PoeNinjaApi.GetUniqueMaps();
+
+            foreach (var uniqueMap in uniqueMaps)
+            {
+                var dbUniqueMap = Context.UniqueMaps.SingleOrDefault(um => um.InGameId == uniqueMap.InGameId);
+                if (dbUniqueMap == default(UniqueMap))
+                    Context.UniqueMaps.Add(uniqueMap);
+                else
+                {
+                    uniqueMap.PriceInChaos = uniqueMap.PriceInChaos;
+                    uniqueMap.PriceInExalted = uniqueMap.PriceInExalted;
+                }
+            }
+
+            Context.SaveChanges();
+        }
+
+
+        private void UpdateItemCombinationCostAndProfits()
+        {
+            foreach (ItemCombination itemCombination in Context.ItemCombinations.ToList())
+            {
+                itemCombination.UpdateCostAndProfit();
+            }
+
+            Context.SaveChanges();
+        }
 
         private void UpdateCurrencyTypes()
         {
@@ -43,6 +75,25 @@ namespace PoeTradingHelper.Backend.Helper
                 {
                     dbCurrency.PriceInChaos = currency.PriceInChaos;
                     dbCurrency.PriceInExalted = currency.PriceInExalted;
+                }
+            }
+
+            Context.SaveChanges();
+        }
+
+        private void UpdateGems()
+        {
+            var gems = PoeNinjaApi.GetGems();
+
+            foreach (var gem in gems)
+            {
+                var dbGem = Context.Gems.SingleOrDefault(g => g.Name == gem.Name && g.Level == gem.Level && g.Corrupted == gem.Corrupted && g.Quality == gem.Quality);
+                if (dbGem == default(Gem))
+                    Context.Gems.Add(gem);
+                else
+                {
+                    gem.PriceInChaos = gem.PriceInChaos;
+                    gem.PriceInExalted = gem.PriceInExalted;
                 }
             }
 

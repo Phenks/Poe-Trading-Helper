@@ -1,16 +1,380 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
+using PoeTradingHelper.Backend.Helper;
 using PoeTradingHelper.Backend.Models;
+using PoeTradingHelper.Backend.Models.ItemMapping;
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable IdentifierTypo
 
-namespace PoeTradingHelper.Backend.DAL
+namespace PoeTradingHelper.Backend.DAL.Initializer
 {
 
-    public class Items
+    public static class CurrencyId
     {
+        public static int Chaos_Orb = 1;
+        public static int Splinter_of_Uul_Netol = 59;
+        public static int Splinter_of_Esh = 58;
+        public static int Splinter_of_Tul = 57;
+        public static int Splinter_of_Xoph = 56;
+        public static int Shaper_Set = 55;
+        public static int Pale_Court_Set = 54;
+        public static int Mortal_Set = 53;
+        public static int Splinter_of_Chayula = 60;
+        public static int Sacrifice_Set = 52;
+        public static int Journeyman_Cartographers_Seal = 50;
+        public static int Apprentice_Cartographers_Seal = 49;
+        public static int Master_Cartographers_Sextant = 48;
+        public static int Journeyman_Cartographers_Sextant = 47;
+        public static int Apprentice_Cartographers_Sextant = 46;
+        public static int Stacked_Deck = 45;
+        public static int Offering_to_the_Goddess = 44;
+        public static int Master_Cartographers_Seal = 51;
+        public static int Blessing_of_Xoph = 61;
+        public static int Blessing_of_Tul = 62;
+        public static int Blessing_of_Esh = 63;
+        public static int Exalted_Shard = 80;
+        public static int Annulment_Shard = 79;
+        public static int Ancient_Orb = 78;
+        public static int Engineers_Orb = 77;
+        public static int Harbingers_Orb = 76;
+        public static int Orb_of_Horizons = 75;
+        public static int Orb_of_Binding = 74;
+        public static int Orb_of_Annulment = 73;
+        public static int Divine_Vessel = 72;
+        public static int Ancient_Reliquary_Key = 71;
+        public static int Chayulas_Breachstone = 70;
+        public static int Uul_Netols_Breachstone = 69;
+        public static int Eshs_Breachstone = 68;
+        public static int Tuls_Breachstone = 67;
+        public static int Xophs_Breachstone = 66;
+        public static int Blessing_of_Chayula = 65;
+        public static int Blessing_of_Uul_Netol = 64;
+        public static int Fragment_of_the_Chimera = 43;
+        public static int Fragment_of_the_Minotaur = 42;
+        public static int Fragment_of_the_Phoenix = 41;
+        public static int Fragment_of_the_Hydra = 40;
+        public static int Blessed_Orb = 18;
+        public static int Chromatic_Orb = 17;
+        public static int Orb_of_Chance = 16;
+        public static int Gemcutters_Prism = 15;
+        public static int Orb_of_Scouring = 14;
+        public static int Perandus_Coin = 13;
+        public static int Silver_Coin = 12;
+        public static int Jewellers_Orb = 11;
+        public static int Cartographers_Chisel = 10;
+        public static int Orb_of_Regret = 9;
+        public static int Vaal_Orb = 8;
+        public static int Regal_Orb = 7;
+        public static int Orb_of_Alteration = 6;
+        public static int Orb_of_Fusing = 5;
+        public static int Orb_of_Alchemy = 4;
+        public static int Divine_Orb = 3;
+        public static int Exalted_Orb = 2;
+        public static int Glassblowers_Bauble = 19;
+        public static int Mirror_Shard = 81;
+        public static int Orb_of_Augmentation = 20;
+        public static int Mirror_of_Kalandra = 22;
+        public static int Volkuurs_Key = 39;
+        public static int Inyas_Key = 38;
+        public static int Yriels_Key = 37;
+        public static int Ebers_Key = 36;
+        public static int Mortal_Hope = 35;
+        public static int Mortal_Ignorance = 34;
+        public static int Mortal_Rage = 33;
+        public static int Mortal_Grief = 32;
+        public static int Sacrifice_at_Noon = 31;
+        public static int Sacrifice_at_Dawn = 30;
+        public static int Sacrifice_at_Midnight = 29;
+        public static int Sacrifice_at_Dusk = 28;
+        public static int Eternal_Orb = 27;
+        public static int Armourers_Scrap = 26;
+        public static int Blacksmiths_Whetstone = 25;
+        public static int Portal_Scroll = 24;
+        public static int Scroll_of_Wisdom = 23;
+        public static int Orb_of_Transmutation = 21;
+        public static int Timeworn_Reliquary_Key = 82;
+
+    }
+
+    public class SkillGemNames
+    {
+        public static string Empower = "Empower Support";
+
+
+        public static string Enlighten = "Enlighten Support";
+        public static string Enhance = "Enhance Support";
+    }
+
+    public class ItemIds
+    {
+
+
+        public static int Missing_Item = -1;
+
+        public static class UniqueMaps
+        {
+            public static int The_Perandus_Manor = 1566;
+            public static int The_Cowards_Trial = 1466;
+            public static int Olmecs_Sanctum = 883;
+            public static int Maelström_of_Chaos = 773;
+            public static int Death_and_Taxes = 390;
+            public static int Actons_Nightmare = 25;
+            public static int Hallowed_Ground = 606;
+            public static int Hall_of_Grandmasters = 605;
+            public static int Caer_Blaidd, _Wolfpacks_Den = 215;
+            public static int Obas_Cursed_Trove = 879;
+            public static int Vaults_of_Atziri = 1768;
+            public static int Poorjoys_Asylum = 960;
+            public static int The_Twilight_Temple = 2285;
+            public static int Mao_Kun = 786;
+            public static int The_Beachhead_T5 = 2247;
+            public static int The_Vinktar_Square = 1656;
+            public static int The_Beachhead_T10 = 2246;
+            public static int The_Putrid_Cloister = 1578;
+            public static int The_Beachhead_T15 = 2245;
+            public static int Doryanis_Machinarium = 7538;
+            public static int Pillars_of_Arun = 2264;
+            public static int Whakawairua_Tuahu = 1866;
+
+        }
+
+        public static class Prophecies
+        {
+            public static int The_Queens_Sacrifice = 4973;
+            public static int Echoes_of_Witchcraft = 472;
+            public static int Lightning_Falls = 751;
+            public static int Deadly_Rivalry_III = 365;
+            public static int Mysterious_Invaders = 855;
+            public static int Overflowing_Riches = 902;
+            public static int The_Bishops_Legacy = 7371;
+            public static int The_Forgotten_Garrison = 1501;
+            public static int Unbearable_Whispers_IV = 1732;
+            public static int A_Regal_Death = 8;
+            public static int From_The_Void = 552;
+            public static int The_Silverwood = 1609;
+            public static int The_Feral_Lord_III = 1493;
+            public static int The_Fall_of_an_Empire = 4909;
+            public static int Storm_on_the_Horizon = 1371;
+            public static int The_Wealthy_Exile = 1670;
+            public static int A_Whispered_Prayer = 10;
+            public static int Day_of_Sacrifice_II = 359;
+            public static int From_Death_Springs_Life = 551;
+            public static int Gilded_Within = 570;
+            public static int Golden_Touch = 574;
+            public static int Kalandras_Craft = 700;
+            public static int Lasting_Impressions = 738;
+            public static int Notched_Flesh = 868;
+            public static int Possessed_Foe = 962;
+            public static int The_Ambitious_Bandit_I = 1415;
+            public static int Risen_Blood = 1064;
+            public static int Hunters_Lesson = 647;
+            public static int The_Last_Watch = 1543;
+            public static int The_Sword_Kings_Passion = 1627;
+            public static int Strong_as_a_Bull = 1378;
+            public static int End_of_the_Light = 4895;
+            public static int A_Firm_Foothold = 2;
+            public static int Beyond_Sight_I = 156;
+            public static int Deadly_Rivalry_IV = 366;
+            public static int The_Stockkeeper = 1618;
+            public static int The_Twins = 1641;
+            public static int The_Warmongers_III = 1666;
+            public static int The_Nest = 1556;
+            public static int Fears_Wide_Reach = 519;
+            public static int Holding_the_Bridge = 632;
+            public static int Winters_Mournful_Melodies = 1892;
+            public static int Baptism_by_Death = 136;
+            public static int The_Unbreathing_Queen_IV = 1646;
+            public static int Blood_of_the_Betrayed = 173;
+            public static int Faith_Exhumed = 7408;
+            public static int Erased_from_Memory = 491;
+            public static int Hidden_Reinforcements = 625;
+            public static int The_Singular_Spirit = 1610;
+            public static int The_Brothers_of_Necromancy = 1447;
+            public static int The_Lost_Undying = 1548;
+            public static int A_Prodigious_Hand = 7;
+            public static int Greeds_Folly = 4849;
+            public static int Cold_Blooded_Fury = 4863;
+            public static int Thaumaturgical_History_I = 1408;
+            public static int The_Eagles_Cry = 1483;
+            public static int The_Feral_Lord_II = 1492;
+            public static int Forceful_Exorcism = 538;
+            public static int Heavy_Blows = 613;
+            public static int Mouth_of_Horrors = 832;
+            public static int Pleasure_and_Pain = 954;
+            public static int Roths_Legacy = 1069;
+            public static int The_Alchemist = 1414;
+            public static int The_Beginning_and_the_End = 1430;
+            public static int The_Bloody_Flowers_Redux = 1438;
+            public static int The_Child_of_Lunaris = 1459;
+            public static int The_Cursed_Choir = 1467;
+            public static int The_Feral_Lord_I = 1491;
+            public static int Dying_Cry = 466;
+            public static int The_Invader = 1532;
+            public static int The_Snuffed_Flame = 1613;
+            public static int The_Soulless_Beast = 1616;
+            public static int The_Unbreathing_Queen_I = 1643;
+            public static int The_Unbreathing_Queen_II = 1644;
+            public static int The_Undead_Brutes = 1648;
+            public static int The_Vanguard = 1652;
+            public static int Unbearable_Whispers_I = 1729;
+            public static int Agony_at_Dusk = 4850;
+            public static int Black_Devotion = 4891;
+            public static int The_Wards_Ward = 1662;
+            public static int Blood_in_the_Eyes = 171;
+            public static int The_Plaguemaw_I = 1569;
+            public static int Day_of_Sacrifice_I = 358;
+            public static int The_Sharpened_Blade = 1605;
+            public static int The_Prison_Guard = 1576;
+            public static int The_Four_Feral_Exiles = 1505;
+            public static int The_Lady_in_Black = 1541;
+            public static int The_Plaguemaw_II = 1570;
+            public static int The_Watchers_Watcher = 1669;
+            public static int Unbearable_Whispers_III = 1731;
+            public static int Dark_Instincts = 4859;
+            public static int Last_of_the_Wildmen = 4889;
+            public static int Trapped_in_the_Tower = 4893;
+            public static int Blinding_Light = 5972;
+            public static int A_Call_into_the_Void = 1;
+            public static int Beyond_Sight_II = 157;
+            public static int The_Plaguemaw_III = 1571;
+            public static int Day_of_Sacrifice_III = 360;
+            public static int The_Hardened_Armour = 1518;
+            public static int Graceful_Flames = 584;
+            public static int The_Brutal_Enforcer = 1448;
+            public static int The_Scout = 1595;
+            public static int Unbearable_Whispers_II = 1730;
+            public static int Crimson_Hues = 4921;
+            public static int A_Valuable_Combination = 9;
+            public static int Ending_the_Torment = 487;
+            public static int Power_Magnified = 963;
+            public static int Reforged_Bonds = 1043;
+            public static int The_Corrupt = 1462;
+            public static int The_God_of_Misfortune = 1511;
+            public static int The_Walking_Mountain = 1659;
+            public static int The_Prison_Key = 1577;
+            public static int Rebirth = 1031;
+            public static int Anarchys_End_I = 53;
+            public static int Plague_of_Frogs = 944;
+            public static int Plague_of_Rats = 945;
+            public static int The_Plaguemaw_V = 1573;
+            public static int Dance_of_Steel = 4868;
+            public static int The_Great_Leader_of_the_North = 4908;
+            public static int The_Great_Mind_of_the_North = 4896;
+            public static int The_Bowstrings_Music = 1440;
+            public static int The_Mysterious_Gift = 1555;
+            public static int Fire, _Wood_and_Stone = 531;
+            public static int Fire_and_Ice = 529;
+            public static int Touched_by_the_Wind = 1706;
+            public static int Flesh_of_the_Beast = 534;
+            public static int The_Beautiful_Guide = 1429;
+            public static int A_Master_Seeks_Help = 5;
+            public static int Abnormal_Effulgence = 13;
+            public static int Against_the_Tide = 28;
+            public static int Anarchys_End_II = 54;
+            public static int Anarchys_End_IV = 56;
+            public static int Ancient_Doom = 59;
+            public static int Beyond_Sight_IV = 159;
+            public static int Crushing_Squall = 332;
+            public static int Custodians_of_Silence = 342;
+            public static int Deadly_Rivalry_II = 364;
+            public static int Deadly_Rivalry_V = 367;
+            public static int A_Forest_of_False_Idols = 3;
+            public static int Beyond_Sight_III = 158;
+            public static int Bountiful_Traps = 187;
+            public static int Unbearable_Whispers_V = 1733;
+            public static int Trash_to_Treasure = 1711;
+            public static int Fated_Connections = 518;
+            public static int The_Kings_Path = 1540;
+            public static int Monstrous_Treasure = 823;
+            public static int A_Vision_of_Ice_and_Fire = 4912;
+            public static int Wind_and_Thunder = 1881;
+            public static int Darktongues_Shriek = 4913;
+            public static int Song_of_the_Sekhema = 4906;
+            public static int Vaal_Winds = 1762;
+            public static int The_Jewellers_Touch = 1535;
+            public static int Twice_Enchanted = 1726;
+            public static int Cleanser_of_Sins = 277;
+            public static int Day_of_Sacrifice_IV = 361;
+            public static int The_Servants_Heart = 1604;
+            public static int Lost_in_the_Pages = 767;
+            public static int Defiled_in_the_Sceptre = 404;
+            public static int A_Gracious_Master = 4;
+            public static int Unnatural_Energy = 1748;
+            public static int A_Dishonourable_Death = 4861;
+            public static int The_Ambitious_Bandit_III = 1417;
+            public static int The_Queens_Vaults = 1580;
+            public static int Blind_Faith = 4918;
+            public static int Path_of_Betrayal = 918;
+            public static int The_Unbreathing_Queen_V = 1647;
+            public static int The_Forgotten_Soldiers = 1502;
+            public static int Erasmus_Gift = 492;
+            public static int The_Flayed_Man = 1497;
+            public static int Fire_and_Brimstone = 528;
+            public static int Heart_of_the_Fire = 609;
+            public static int Vaal_Invasion = 1754;
+            public static int Vital_Transformation = 1794;
+            public static int Waiting_in_Ambush = 1832;
+            public static int Storm_on_the_Reef = 2203;
+            public static int The_Dreaded_Rhoa = 4876;
+            public static int The_Storm_Spire = 4880;
+            public static int A_Rift_in_Time = 4899;
+            public static int Suns_Punishment = 4901;
+            public static int Cold_Greed = 4902;
+            public static int The_Malevolent_Witch = 4903;
+            public static int The_Nightmare_Awakens = 4907;
+            public static int The_Warmongers_IV = 1667;
+            public static int Deadly_Rivalry_I = 363;
+            public static int Weeping_Death = 1851;
+            public static int Thaumaturgical_History_III = 1410;
+            public static int Anarchys_End_III = 55;
+            public static int The_Hungering_Swarm = 1527;
+            public static int The_King_and_the_Brambles = 1537;
+            public static int The_Trembling_Earth = 1638;
+            public static int The_Warmongers_I = 1664;
+            public static int Battle_Hardened = 7422;
+            public static int Burning_Dread = 4878;
+            public static int Deadly_Twins = 368;
+            public static int An_Unseen_Peril = 52;
+            public static int The_Feral_Lord_V = 1495;
+            public static int The_Warmongers_II = 1665;
+            public static int The_Undead_Storm = 1649;
+            public static int The_Unbreathing_Queen_III = 1645;
+            public static int Hidden_Vaal_Pathways = 626;
+            public static int Ice_from_Above = 655;
+            public static int Natures_Resilience = 857;
+            public static int Nemesis_of_Greed = 863;
+            public static int Pools_of_Wealth = 959;
+            public static int Resistant_to_Change = 1053;
+            public static int Severed_Limbs = 1112;
+            public static int Smothering_Tendrils = 1324;
+            public static int Soil, _Worms_and_Blood = 1327;
+            public static int Thaumaturgical_History_II = 1409;
+            public static int Thaumaturgical_History_IV = 1411;
+            public static int The_Ambitious_Bandit_II = 1416;
+            public static int The_Apex_Predator = 1419;
+            public static int The_Dream_Trial = 1480;
+            public static int The_Dreamers_Dream = 1481;
+            public static int The_Feral_Lord_IV = 1494;
+            public static int The_Flow_of_Energy = 1500;
+            public static int The_Fortune_Tellers_Collection = 1504;
+            public static int The_Hollow_Pledge = 1525;
+            public static int The_Karui_Rebellion = 1536;
+            public static int The_Lost_Maps = 1547;
+            public static int The_Misunderstood_Queen = 1554;
+            public static int The_Petrified = 1568;
+            public static int The_Plaguemaw_IV = 1572;
+            public static int The_Sinners_Stone = 1611;
+            public static int Fire_from_the_Sky = 530;
+            public static int Visions_of_the_Drowned = 1793;
+
+        }
+
+       
+
         public static class Flasks
         {
             public static int Soul_Ripper = 7454;
@@ -529,6 +893,7 @@ namespace PoeTradingHelper.Backend.DAL
 
         public static class DivinationCards
         {
+            public static int The_Nurse = 18978;
             public static int House_of_Mirrors = 636;
             public static int The_Admirer = 6948;
             public static int The_Darkest_Dream = 6956;
@@ -757,6 +1122,7 @@ namespace PoeTradingHelper.Backend.DAL
             public static int Earth_Drinker = 468;
             public static int Gift_of_the_Gemling_Queen = 568;
             public static int The_Ruthless_Ceinture = 2291;
+            public static int A_Dab_Of_Ink = 18957;
         }
 
         public static class Weapons
@@ -986,8 +1352,8 @@ namespace PoeTradingHelper.Backend.DAL
 
     public class A
     {
-        public static ItemWithAmountBuilder Result => new ItemWithAmountBuilder(1);
-        public static ItemCombinationResultBuilder ItemCombination => new ItemCombinationResultBuilder();
+        public static ItemCombinationResultBuilder Result => new ItemCombinationResultBuilder();
+        public static ItemCombinationBuilderWithFixedResult ItemCombinationWithAFixedResult => new ItemCombinationBuilderWithFixedResult();
     }
 
     public class An
@@ -995,32 +1361,115 @@ namespace PoeTradingHelper.Backend.DAL
         public static ItemWithAmountBuilder Ingredient => new ItemWithAmountBuilder();
     }
 
+
+    
+
+    public class ItemCombinationBuilderWithFixedResult
+    {
+        public ItemCombinationBuilderWithFixedResult()
+        {
+            ItemCombination = new ItemCombinationWithFixedResult {CombinationType = CombinationType.DivinationCard};
+        }
+
+        private ItemCombinationWithFixedResult ItemCombination { get; }
+
+        public ItemCombinationBuilderWithFixedResult ThatUsesTheIngridients(List<ItemWithAmount> ingredients)
+        {
+            ItemCombination.Ingredients = ingredients;
+            return this;
+        }
+
+        public ItemCombinationBuilderWithFixedResult WithTheItemResult(int itemIngameId,bool corrupted = false)
+        {
+            ItemCombination.Result = A.Result.WithTheItem(itemIngameId,corrupted);
+            return this;
+        }
+
+        public ItemCombinationBuilderWithFixedResult WithTheSkillGemResult(string nameConstant,int quality,int gemLevel , bool corrupted)
+        {
+            ItemCombination.Result = A.Result.WithTheItem(
+                DatabaseHelper.GetSkillgem(nameConstant,gemLevel,quality,corrupted,CombinationResultsInitalizer.Context)
+                , corrupted);
+            return this;
+        }
+
+        public ItemCombinationBuilderWithFixedResult WithTheSkillGemResult(string nameConstant, int gemLevel, bool corrupted)
+        {
+            ItemCombination.Result = A.Result.WithTheItem(
+                DatabaseHelper.GetSkillgem(nameConstant, gemLevel ,  corrupted, CombinationResultsInitalizer.Context)
+                , corrupted);
+            return this;
+        }
+
+
+        public ItemCombinationBuilderWithFixedResult WithTheCurrencyResult(int poeNinjaCurrencyId)
+        {
+            ItemCombination.Result = A.Result.WithTheCurrency(poeNinjaCurrencyId);
+            return this;
+        }
+
+        public ItemCombinationBuilderWithFixedResult WithTheCombinationType(CombinationType combinationType)
+        {
+            ItemCombination.CombinationType = combinationType;
+            return this;
+        }
+
+        public static implicit operator ItemCombinationWithFixedResult(ItemCombinationBuilderWithFixedResult builderWithFixedResult)
+        {
+            return builderWithFixedResult.ItemCombination;
+        }
+
+        public ItemCombinationWithFixedResult ResultTimes(int amount)
+        {
+            ItemCombination.Result.Amount = amount;
+            return this;
+        }
+    }
+
     public class ItemCombinationResultBuilder
     {
+        private ItemCombinationResult CombinationResult { get; set; }
+        public TradingContext Context { get; set; }
         public ItemCombinationResultBuilder()
         {
-            ItemCombinationResult = new ItemCombinationResult();
+            Context = CombinationResultsInitalizer.Context;
+            CombinationResult = new ItemCombinationResult();
         }
 
-        private ItemCombinationResult ItemCombinationResult { get; }
-
-        public ItemCombinationResultBuilder ThatUsesTheIngridients(List<ItemWithAmount> ingredients)
+        public ItemCombinationResultBuilder WithTheItem(int ingameItemId, bool corrupted = false)
         {
-            ItemCombinationResult.Ingredients = ingredients;
+            CombinationResult.Item = DatabaseHelper.GetItemById(ingameItemId, Context);
+            CombinationResult.Corrupted = corrupted;
             return this;
         }
 
-        public ItemCombinationResultBuilder WithTheItemResult(int itemIngameId)
+        public ItemCombinationResultBuilder WithTheItem(PoeObject item, bool corrupted = false)
         {
-            ItemCombinationResult.Result = A.Result.WithTheItem(itemIngameId);
+            CombinationResult.Item = item;
+            CombinationResult.Corrupted = corrupted;
             return this;
         }
 
+        public ItemCombinationResultBuilder WithTheCurrency(int poeNinjaCurrencyId)
+        {
+            CombinationResult.Item = (PoeObject)Context.Currencies.First(item => item.PoeNinjaId == poeNinjaCurrencyId);
+            CombinationResult.Corrupted = false;
+            return this;
+        }
+
+        public ItemCombinationResultBuilder Times(int amount)
+        {
+            CombinationResult.Amount = amount;
+            return this;
+        }
+ 
 
         public static implicit operator ItemCombinationResult(ItemCombinationResultBuilder builder)
         {
-            return builder.ItemCombinationResult;
+            return builder.CombinationResult;
         }
+
+
     }
 
     public class ItemWithAmountBuilder
@@ -1041,11 +1490,16 @@ namespace PoeTradingHelper.Backend.DAL
 
         public ItemWithAmountBuilder WithTheItem(int ingameItemId)
         {
-            ItemWithAmount.Item = (PoeObject)Context.Items.First(item => item.InGameId == ingameItemId);
+            ItemWithAmount.Item = DatabaseHelper.GetItemById(ingameItemId, Context);
+
             return this;
         }
 
-
+        public ItemWithAmountBuilder WithTheCurrency(int poeNinjaCurrencyId)
+        {
+            ItemWithAmount.Item = (PoeObject)Context.Currencies.First(item => item.PoeNinjaId == poeNinjaCurrencyId);
+            return this;
+        }
 
         public ItemWithAmountBuilder Times(int amount)
         {

@@ -16,5 +16,11 @@ namespace PoeTradingHelper.Backend.Models
             get => Item.PriceInChaos * Amount;
         }
 
+        public float TotalValueInExalted
+        {
+            get => Item.PriceInExalted * Amount;
+
+        }
+
     }
 }
